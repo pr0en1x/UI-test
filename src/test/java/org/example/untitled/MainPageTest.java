@@ -41,4 +41,3 @@ public class MainPageTest {
         mailPage.btnSendClick();
     }
 }
-// gmail login: test.ui.simbirsoft@gmail.com, pass: jojojos12;
