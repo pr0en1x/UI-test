@@ -1,9 +1,12 @@
 package org.example.untitled;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -53,6 +56,12 @@ public class MailPage {
     }
 
     public int lettersCount() {
+        return themes.size();
+    }
+
+    public int newLettersCount(int n) {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//div[@class='y6' and contains(.,'Simbirsoft theme')]"), n));
         return themes.size();
     }
 }

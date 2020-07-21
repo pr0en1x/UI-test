@@ -3,6 +3,8 @@ package org.example.untitled;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -30,14 +32,19 @@ public class MainPageTest {
         loginPage.loginBtnClick();
         loginPage.passwordInput("jojojos12");
         loginPage.passwordBtnClick();
-        int n = mailPage.lettersCount();
+        int lettersCount = mailPage.lettersCount();
         mailPage.btnComposeClick();
         mailPage.toFieldInput("test.ui.simbirsoft@gmail.com");
         mailPage.subjectFieldInput("Simbirsoft theme");
-        if (n < 5)
-            mailPage.textAreaInput("Найдено " + n + " письма");
+        if (lettersCount < 5)
+            mailPage.textAreaInput("Найдено " + lettersCount + " письма");
         else
-            mailPage.textAreaInput("Найдено " + n + " писем");
+            mailPage.textAreaInput("Найдено " + lettersCount + " писем");
         mailPage.btnSendClick();
+        Assert.assertTrue(mailPage.newLettersCount(lettersCount) > lettersCount);
+    }
+    @AfterTest
+    public void close() {
+        driver.close();
     }
 }
