@@ -17,10 +17,11 @@ public class MailPage {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
+
     @FindBy(xpath = "//div[@class='y6' and contains(.,'Simbirsoft theme')]")
     private List<WebElement> themes;
 
-    @FindBy(xpath = "//div[@class='T-I T-I-KE L3']")
+    @FindBy(css = ".aic")
     private WebElement btnCompose;
 
     @FindBy(name = "to")
@@ -32,7 +33,7 @@ public class MailPage {
     @FindBy(css = ".editable")
     private WebElement textArea;
 
-    @FindBy(xpath = "//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3']")
+    @FindBy(css = ".dC")
     private WebElement btnSend;
 
     public void btnSendClick() {

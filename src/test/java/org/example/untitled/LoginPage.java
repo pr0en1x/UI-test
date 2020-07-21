@@ -8,18 +8,18 @@ import org.openqa.selenium.support.PageFactory;
 public class LoginPage {
     public WebDriver driver;
 
-    public  LoginPage(WebDriver driver) {
+    public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
+
     @FindBy(id = "identifierId")
     private WebElement loginField;
-
 
     @FindBy(id = "identifierNext")
     private WebElement loginBtn;
 
-    @FindBy(xpath = "//*[contains(@name, 'password')]")
+    @FindBy(name = "password")
     private WebElement passwordField;
 
     @FindBy(id = "passwordNext")
