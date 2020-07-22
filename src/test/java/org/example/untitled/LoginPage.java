@@ -5,6 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import static org.example.untitled.MainPageTest.mailPage;
+
+
 public class LoginPage {
     public WebDriver driver;
 
@@ -39,5 +42,6 @@ public class LoginPage {
 
     public void passwordBtnClick() {
         passwordBtn.click();
+        mailPage = new MailPage(driver);
     }
 }
