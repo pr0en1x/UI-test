@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MailPage {
     public WebDriver driver;
@@ -18,7 +19,7 @@ public class MailPage {
         this.driver = driver;
     }
 
-    @FindBy(xpath = "//div[@class='y6' and contains(.,'Simbirsoft theme')]")
+    @FindBy(css = ".y6")
     private List<WebElement> themes;
 
     @FindBy(css = ".aic")
@@ -36,33 +37,26 @@ public class MailPage {
     @FindBy(css = ".dC")
     private WebElement btnSend;
 
-    public void btnSendClick() {
+    public void sendMessage() {
+        int count = lettersCount();
+        btnCompose.click();
+        toField.sendKeys(ConfProperties.getProperty("login"));
+        subjectField.sendKeys("Simbirsoft theme");
+        if (count < 5)
+            textArea.sendKeys("Найдено " + count + " письма");
+        else
+            textArea.sendKeys("Найдено " + count + " писем");
         btnSend.click();
     }
 
-    public void toFieldInput(String to) {
-        toField.sendKeys(to);
-    }
-
-    public void subjectFieldInput(String subject) {
-        subjectField.sendKeys(subject);
-    }
-
-    public void textAreaInput(String text) {
-        textArea.sendKeys(text);
-    }
-
-    public void btnComposeClick() {
-        btnCompose.click();
-    }
-
     public int lettersCount() {
-        return themes.size();
+        List<WebElement> sortedList = themes.stream().filter(e -> e.getText().contains("Simbirsoft theme")).collect(Collectors.toList());
+        return sortedList.size();
     }
 
     public int newLettersCount(int n) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//div[@class='y6' and contains(.,'Simbirsoft theme')]"), n));
-        return themes.size();
+        return lettersCount();
     }
 }

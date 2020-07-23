@@ -5,9 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static org.example.untitled.MainPageTest.mailPage;
-
-
 public class LoginPage {
     public WebDriver driver;
 
@@ -28,20 +25,11 @@ public class LoginPage {
     @FindBy(id = "passwordNext")
     private WebElement passwordBtn;
 
-    public void loginInput(String login) {
-        loginField.sendKeys(login);
-    }
-
-    public void loginBtnClick() {
+    public MailPage loginWithCorrectLoginAndPassword() {
+        loginField.sendKeys(ConfProperties.getProperty("login"));
         loginBtn.click();
-    }
-
-    public void passwordInput(String password) {
-        passwordField.sendKeys(password);
-    }
-
-    public void passwordBtnClick() {
+        passwordField.sendKeys(ConfProperties.getProperty("password"));
         passwordBtn.click();
-        mailPage = new MailPage(driver);
+        return new MailPage(driver);
     }
 }
