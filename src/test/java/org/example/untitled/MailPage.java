@@ -44,6 +44,7 @@ public class MailPage {
     private WebElement btnSend;
 
     public void sendMessage() {
+        if (checkOpenPage()) {
         int count = lettersCount();
         btnCompose.click();
         toField.sendKeys(login);
@@ -53,6 +54,8 @@ public class MailPage {
         else
             textArea.sendKeys("Найдено " + count + " писем");
         btnSend.click();
+        }
+        else System.out.println("Неверный Url");
     }
 
     public int lettersCount() {
@@ -64,5 +67,9 @@ public class MailPage {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//div[@class='y6' and contains(.,'Simbirsoft theme')]"), n));
         return lettersCount();
+    }
+
+    public boolean checkOpenPage() {
+        return driver.getCurrentUrl().equals("https://mail.google.com/mail/u/0/#inbox");
     }
 }
