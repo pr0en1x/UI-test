@@ -8,13 +8,19 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MailPage {
     public WebDriver driver;
+    final Path tokenFile = Paths.get(System.getProperty("user.home")).resolve("config");
+    final String login = Files.readAllLines(tokenFile).get(0).trim();
 
-    public MailPage(WebDriver driver) {
+    public MailPage(WebDriver driver) throws IOException {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
@@ -40,7 +46,7 @@ public class MailPage {
     public void sendMessage() {
         int count = lettersCount();
         btnCompose.click();
-        toField.sendKeys(ConfProperties.getProperty("login"));
+        toField.sendKeys(login);
         subjectField.sendKeys("Simbirsoft theme");
         if (count < 5)
             textArea.sendKeys("Найдено " + count + " письма");

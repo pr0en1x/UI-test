@@ -5,10 +5,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class LoginPage {
     public WebDriver driver;
+    final Path tokenFile = Paths.get(System.getProperty("user.home")).resolve("config");
+    final String login = Files.readAllLines(tokenFile).get(0).trim();
+    final String password = Files.readAllLines(tokenFile).get(1).trim();
 
-    public LoginPage(WebDriver driver) {
+    public LoginPage(WebDriver driver) throws IOException {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
@@ -25,10 +33,10 @@ public class LoginPage {
     @FindBy(id = "passwordNext")
     private WebElement passwordBtn;
 
-    public MailPage loginWithCorrectLoginAndPassword() {
-        loginField.sendKeys(ConfProperties.getProperty("login"));
+    public MailPage loginWithCorrectLoginAndPassword() throws IOException {
+        loginField.sendKeys(login);
         loginBtn.click();
-        passwordField.sendKeys(ConfProperties.getProperty("password"));
+        passwordField.sendKeys(password);
         passwordBtn.click();
         return new MailPage(driver);
     }
