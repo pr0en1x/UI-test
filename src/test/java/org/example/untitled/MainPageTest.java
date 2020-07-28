@@ -3,12 +3,17 @@ package org.example.untitled;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 
 public class MainPageTest extends BaseTest {
     public static WebDriver driver;
+    @BeforeSuite
+    public void chooseDriver() {
+        DriverFactory.createDriver("chrome");
+    }
 
     @Step("Проверить, что количество писем увеличивается")
     @Test
